@@ -1,13 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>AI Outreach Automation – Technical Project Report</title>
-  <meta name="description" content="Enterprise-grade AI Outreach Automation system for lead acquisition, personalization, LinkedIn & email outreach, engagement tracking, and AI-powered reply automation." />
-</head>
-
-<body>
-
 <h1>🏷️ Project Title</h1>
 <p><strong>AI Outreach Automation Platform</strong></p>
 
