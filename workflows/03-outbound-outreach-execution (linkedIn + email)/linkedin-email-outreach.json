@@ -1,0 +1,997 @@
+{
+  "name": "LINKEDIN + EMAIL OUTREACH",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Automated LinkedIn & Email Outreach: Smart Lead Engagement with Unipile\n### This workflow automates the outreach process by sending personalized LinkedIn invitations and emails to leads retrieved from a Google Sheet. \n### It utilizes the Unipile API to send LinkedIn invitations with tailored icebreaker messages, updates the invitation status in the Google Sheet, and sends personalized emails via Gmail, while logging the email sent history in a PostgreSQL database for effective tracking and follow-up.",
+        "height": 460,
+        "width": 3200,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        16,
+        -96
+      ],
+      "id": "8d44312d-532e-4eaf-bd0f-5cf18bb17ccd",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "content": "### When executed by the first workflow.",
+        "height": 80,
+        "width": 320,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        192,
+        224
+      ],
+      "id": "b89f683d-d381-4afd-a156-b589c512886e",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "content": "### Saves LinkedIn invite history to a PostgreSQL database, storing session IDs and AI-generated icebreaker messages for tracking and future reference.",
+        "height": 140,
+        "width": 320,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1840,
+        224
+      ],
+      "id": "3e084184-a06e-4fb5-8f52-124951774417",
+      "name": "Sticky Note7"
+    },
+    {
+      "parameters": {
+        "content": "### Randomizer code and wait node. Generates a random number (0-7) and sets it as the wait time, introducing variability and a human-like delay to the automation for a more natural execution flow.",
+        "width": 320,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2528,
+        -80
+      ],
+      "id": "ed185334-6b3d-4472-9021-7173b1d69326",
+      "name": "Sticky Note9"
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "Spreadsheet Id"
+            },
+            {
+              "name": "Sheetid"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        320,
+        64
+      ],
+      "id": "75d084f6-2405-4f3b-8dcf-08d43db45f84",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        752,
+        32
+      ],
+      "id": "2a707104-29d7-4b12-a718-d3a1410cea8d",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $json['Spreadsheet id'] }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "={{ $json.Sheetid }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        528,
+        64
+      ],
+      "id": "d17784a6-5c4f-4da7-a7f8-896c0d9d514b",
+      "name": "Get Data",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "lvjPCRM0khWxXxUz",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "626f7a90-55f9-4756-b439-1bd81b894bff",
+              "name": "linkedin_url",
+              "value": "={{ $json.linkedin_url }}",
+              "type": "string"
+            },
+            {
+              "id": "39415988-966d-4e8d-a510-ce1a2b5d5c27",
+              "name": "linkedin_IceBreaker",
+              "value": "={{ $json.LinkedinIceBreaker }}",
+              "type": "string"
+            },
+            {
+              "id": "c4793f6f-247b-4d3d-8efc-554e67911e56",
+              "name": "user_id",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "7b19156b-7aab-4c7d-9100-6ca2fa3545bb",
+              "name": "EmailIceBreaker",
+              "value": "={{ $json.emailicebreaker }}",
+              "type": "string"
+            },
+            {
+              "id": "c256c160-fee1-4d67-a137-899f02b696b4",
+              "name": "EmailBody",
+              "value": "={{ $json.Email_body }}",
+              "type": "string"
+            },
+            {
+              "id": "9d4b969d-b6fb-4199-a0a2-33834cad55d2",
+              "name": "EmailSubject",
+              "value": "={{ $json.Email_subject }}",
+              "type": "string"
+            },
+            {
+              "id": "a466f546-551d-43c6-bbe4-fe59d465378b",
+              "name": "providerId",
+              "value": "={{ $json.Linkedin_ProviderID }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        992,
+        64
+      ],
+      "id": "646a854c-bc8e-4125-9afd-f0fb32baf190",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": " https://[subdomain].unipile.com:[port]/api/v1/users/invite",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-API-KEY",
+              "value": "your_unipile_api_key"
+            },
+            {
+              "name": "accept",
+              "value": "application/json"
+            },
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "provider_id",
+              "value": "={{ $json.providerId }}"
+            },
+            {
+              "name": "account_id",
+              "value": "your_unipile_account_id"
+            },
+            {
+              "name": "message",
+              "value": "={{ $('Edit Fields1').item.json.linkedin_IceBreaker }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1280,
+        64
+      ],
+      "id": "c5b0aeab-cbe9-4264-910a-8b57d1e0582c",
+      "name": "SendInvite"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $('When Executed by Another Workflow').item.json[\"Spreadsheet id\"] }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "={{ $('When Executed by Another Workflow').item.json.Sheetid }}",
+          "mode": "id"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $('Get Data').item.json.id }}",
+            "Linkedin_sentInvite": "={{$now}}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "first_name",
+              "displayName": "first_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "last_name",
+              "displayName": "last_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "linkedin_url",
+              "displayName": "linkedin_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "email_status",
+              "displayName": "email_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "photo_url",
+              "displayName": "photo_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "twitter_url",
+              "displayName": "twitter_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "github_url",
+              "displayName": "github_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "facebook_url",
+              "displayName": "facebook_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "headlne",
+              "displayName": "headlne",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "country",
+              "displayName": "country",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "organization_name",
+              "displayName": "organization_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "organization_website",
+              "displayName": "organization_website",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "seniority",
+              "displayName": "seniority",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "peronsal_emails",
+              "displayName": "peronsal_emails",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "research_info",
+              "displayName": "research_info",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "emailicebreaker",
+              "displayName": "emailicebreaker",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "LinkedinIceBreaker",
+              "displayName": "LinkedinIceBreaker",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email_subject",
+              "displayName": "Email_subject",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email_body",
+              "displayName": "Email_body",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "linkedin_body",
+              "displayName": "linkedin_body",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Linkedin_sentInvite",
+              "displayName": "Linkedin_sentInvite",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1504,
+        64
+      ],
+      "id": "2d2cf59e-eabc-49af-a58e-611b972608a8",
+      "name": "UpdateINVSent",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "lvjPCRM0khWxXxUz",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1tSl-WdN2D6BPtWbE0Yu2WWY4tjfr6likzBHgoNJAnRQ",
+          "mode": "list",
+          "cachedResultName": "LN Tracker",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1tSl-WdN2D6BPtWbE0Yu2WWY4tjfr6likzBHgoNJAnRQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1tSl-WdN2D6BPtWbE0Yu2WWY4tjfr6likzBHgoNJAnRQ/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "first_name": "={{ $('Loop Over Items').item.json.first_name }}",
+            "last_name": "={{ $('Loop Over Items').item.json.last_name }}",
+            "Name": "={{ $('Loop Over Items').item.json.name }}",
+            "LN_url": "={{ $('Loop Over Items').item.json.linkedin_url }}",
+            "LN_publicID": "={{$('Loop Over Items').item.json.linkedin_url.split('/in/')[1].replace('/', '')}}",
+            "LN_providerID": "={{ $('Loop Over Items').item.json.Linkedin_ProviderID }}",
+            "LN_invitationSent": "YES",
+            "LN_invitationaccepted": "NO",
+            "LN_msgSent": "NO",
+            "emailSent": "NO",
+            "LN_emailReplied": "NO",
+            "OriginSpreadsheetID": "={{ $('When Executed by Another Workflow').item.json['Spreadsheet id'] }}",
+            "Origin SheetID": "={{ $('When Executed by Another Workflow').item.json.Sheetid }}",
+            "LN_noofmessages": "0",
+            "Email": "={{ $('Loop Over Items').item.json.email }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "first_name",
+              "displayName": "first_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "last_name",
+              "displayName": "last_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "LN_url",
+              "displayName": "LN_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "LN_publicID",
+              "displayName": "LN_publicID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "LN_providerID",
+              "displayName": "LN_providerID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "LN_invitationSent",
+              "displayName": "LN_invitationSent",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "LN_invitationaccepted",
+              "displayName": "LN_invitationaccepted",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "LN_msgSent",
+              "displayName": "LN_msgSent",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "emailSent",
+              "displayName": "emailSent",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "LN_emailReplied",
+              "displayName": "LN_emailReplied",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "OriginSpreadsheetID",
+              "displayName": "OriginSpreadsheetID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Origin SheetID",
+              "displayName": "Origin SheetID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "LN_noofmessages",
+              "displayName": "LN_noofmessages",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1728,
+        64
+      ],
+      "id": "e8b68c55-3d79-4e4d-91cf-fe2f12fe8224",
+      "name": "UpdateLNInfoSheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "lvjPCRM0khWxXxUz",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "n8n_chat_histories2",
+          "mode": "list",
+          "cachedResultName": "n8n_chat_histories2"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "session_id": "={{ $json.LN_providerID }}",
+            "messages": "={ \"type\": \"ai\", \"content\": \"{{ $('Edit Fields1').item.json.linkedin_IceBreaker }}\", \"tool_calls\": [], \"additional_kwargs\": {}, \"response_metadata\": {}, invalid_tool_calls\": [] }"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "session_id",
+              "displayName": "session_id",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "messages",
+              "displayName": "messages",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        1936,
+        64
+      ],
+      "id": "7bc617b9-b869-44f3-a693-13603c41d866",
+      "name": "save LinkedinInvite history"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('UpdateLNInfoSheet').item.json.Email }}",
+        "subject": "={{ $('Edit Fields1').item.json.EmailSubject }}",
+        "emailType": "text",
+        "message": "={{ $('Edit Fields1').item.json.EmailBody }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        2144,
+        64
+      ],
+      "id": "18953601-f6d0-4260-a024-3c6a4c2b5014",
+      "name": "Sent Mail",
+      "webhookId": "bc0afde8-c0ad-4ada-a911-fbd337e10260"
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "n8n_chat_histories_email",
+          "mode": "list",
+          "cachedResultName": "n8n_chat_histories_email"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Session_id": "={{ $('UpdateLNInfoSheet').item.json.Email }}",
+            "message": "={ \"type\": \"ai\", \"content\": \"{{ $('Edit Fields1').item.json.EmailBody.replace(/\\n/g,'') }}\", \"tool_calls\": [], \"additional_kwargs\": {}, \"response_metadata\": {}, invalid_tool_calls\": [] }"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Session_id",
+              "displayName": "Session_id",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "message",
+              "displayName": "message",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        2336,
+        64
+      ],
+      "id": "8d6169ed-45b6-4ffb-ad89-907377049f2f",
+      "name": "Save Mail Sent History"
+    },
+    {
+      "parameters": {
+        "amount": "={{ $json.RandomNumber }}"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2736,
+        64
+      ],
+      "id": "0e6baa1d-d4b8-4f1b-920c-c66b5913a188",
+      "name": "Wait2",
+      "webhookId": "2e2d10c8-1e03-4946-8900-c84f9e70d21a"
+    },
+    {
+      "parameters": {
+        "jsCode": "items[0].json.RandomNumber = Math.floor(Math.random() * 8);\nreturn items;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2544,
+        64
+      ],
+      "id": "86406c1d-1fd9-4c19-b147-b4b6e2142de6",
+      "name": "randomizer1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Get Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Data": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "SendInvite",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SendInvite": {
+      "main": [
+        [
+          {
+            "node": "UpdateINVSent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "UpdateINVSent": {
+      "main": [
+        [
+          {
+            "node": "UpdateLNInfoSheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "UpdateLNInfoSheet": {
+      "main": [
+        [
+          {
+            "node": "save LinkedinInvite history",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "save LinkedinInvite history": {
+      "main": [
+        [
+          {
+            "node": "Sent Mail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sent Mail": {
+      "main": [
+        [
+          {
+            "node": "Save Mail Sent History",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save Mail Sent History": {
+      "main": [
+        [
+          {
+            "node": "randomizer1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait2": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "randomizer1": {
+      "main": [
+        [
+          {
+            "node": "Wait2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "ba63a869-338b-4dc6-9a0b-14f2272d1c69",
+  "meta": {
+    "instanceId": "8c7f016b9ba0896b59e3963aa6e3aad9cabe22a0c91c4b1ad33fc62abf63e8fb"
+  },
+  "id": "u44RUCBu9hvRv0gh",
+  "tags": []
+}

@@ -1,0 +1,499 @@
+{
+  "name": "LEAD ACQUISITION APOLLO APIFY",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Lead Acquisition from Apollo(Apify API)\n#### This workflow fetches qualified leads from Apolloio based on specific criteria (e.g., industry, location, job title) and stores the data, including names, LinkedIn profiles, and email addresses, in Google Sheets for further processing.",
+        "height": 800,
+        "width": 2480
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -80,
+        -16
+      ],
+      "id": "78ffc575-d5d1-45bd-946a-28703b70e5f7",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "### Automatically creates a Google Spreadsheet, dynamically naming it based on the chat query.",
+        "height": 100,
+        "width": 320,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        720,
+        480
+      ],
+      "id": "53e8dc3a-b24a-4bdb-bb3b-281f1e3b0c53",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.apify.com/v2/actor-runs/{{ $json.data.id }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "waitForFinish",
+              "value": "60"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1200,
+        320
+      ],
+      "id": "81e3ec91-524d-4c0b-b9e4-23de4110acc6",
+      "name": "HTTP Request7"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.apify.com/v2/datasets/{{ $json.defaultDatasetID }}/items",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1632,
+        320
+      ],
+      "id": "22218fcf-634b-4b04-988a-015aa4bd3048",
+      "name": "HTTP Request8"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        320
+      ],
+      "id": "42819fce-2cc6-489a-a771-92ad8334584b",
+      "name": "When chat message received",
+      "webhookId": "324ff9eb-54f2-4060-9b61-0f34cb96b2f3"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "22e8f927-4d24-4664-a988-65effc034057",
+              "leftValue": "={{ $json.id }}",
+              "rightValue": "=",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1824,
+        320
+      ],
+      "id": "b828411b-9c6f-4d85-ab54-b4fe938f855d",
+      "name": "If3"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1856,
+        528
+      ],
+      "id": "ce4775e4-97c7-4361-9556-d9ab8faba0da",
+      "name": "Wait",
+      "webhookId": "53e99063-a73a-40c2-a543-314d3d3a9aa2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "af77e1f5-f2bf-4f04-b84a-03a673422e26",
+              "name": "defaultDatasetID",
+              "value": "={{ $json.data.defaultDatasetId }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1424,
+        320
+      ],
+      "id": "0467f78a-4c35-43a9-b2f6-2b8042d9713a",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b754b255-7f0c-4ef8-9eb7-03773c32e8f4",
+              "leftValue": "={{ $json.linkedin_url }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "251e8b8c-bb21-4933-b0f8-5e47a9ef1507",
+              "leftValue": "={{ $json.email }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2064,
+        224
+      ],
+      "id": "df802c3b-e2b9-40e5-909f-dea64e98a507",
+      "name": "If4"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        2176,
+        448
+      ],
+      "id": "0692244d-fc91-4fe4-a185-6d1bcc2e3256",
+      "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.user_query }}",
+        "options": {
+          "systemMessage": "=## Role\n\nYou are an AI assistant that helps users generate URLs for searching people on Apollo.io. Your task is to extract the following four parameters from the user's input:\n\n1. **Industry Id**: \n2.**Employee Range**: The range of employees in the organization. \n   - If a minimum employee count is not provided, default to **10**.\n   - If a maximum employee count is not provided, default to **1,000,000**.\n  - Don't include the number of employees in the url if the user didn't specify it.\n3. **Location**: The location of the company (e.g., \"California, US\" or \"Mumbai, India\" )or Countries (example: USA, UAE ,India)\n4. **Job Title**: The job title of the person (e.g., \"Owner\", \"Realtor\", \"Manager\", \"Project Manager\", \"Consultant\").\n5.**Industry ID**: The industry code corresponding to the industry.\n\n### **Industry Codes**\nHere are some common industry codes you can use:\n- **Real Estate**: `5567cd477369645401010000`\n- **Marketing & Advertising**: `5567cd467369644d39040000`\n- **Construction**: `5567cd4773696439dd350000`\n- **Hospitality**: `5567ce9d7369643bc19c0000`\n- **Computer Software**: `5567cd4e7369643b70010000`\n- **Professional Training & Coaching**: `5567cd49736964541d010000`\n- **Staffing & Recruiting**: `5567e09973696410db020800`\n- *Information Technology and Services**: `5567cd4773696439b10b0000`\n- **consumer services**: `5567d1127261697f2b1d0000`\n- **Health,wellness & fitness** : `5567cddb7369644d250c0000`\n- **Hospital & healthcare**: `5567cdde73696439812c0000`\n- **food & beverages** : `5567ce1e7369643b806a0000`\n- **retail** : `5567ced173696450cb580000`\n- **financial services**: `5567cdd67369643e64020000`\n- **education management** : `5567ce9e736964540d540000`\n\n\nOnce you extract these parameters, construct a URL using the following format:\n\n\nOnce you extract these parameters, construct a URL using the following format:\n\nhttps://app.apollo.io/#/people?page=1&sortAscending=false&sortByField=recommendations_score&organizationIndustryTagIds[]=<INDUSTRY_ID>&personLocations[]=<LOCATION>&organizationNumEmployeesRanges[]=<MIN_EMPLOYEE>%2C<MAX_EMPLOYEE>&personTitles[]=<JOB_TITLE>&contactEmailStatusV2[]=verified\n\n#### **Example : Owners of Real Estate Companies in the UAE with Employee Range from 10**\n\nhttps://app.apollo.io/#/people?page=1&sortAscending=false&sortByField=recommendations_score&organizationIndustryTagIds[]=5567cd477369645401010000&personLocations[]=UAE&organizationNumEmployeesRanges[]=10%2C1000000&personTitles[]=owner&contactEmailStatusV2[]=verified\n\n## Notes\n- Don't include the number of employees in the url if the user didn't specify it.\n- Dont provide any other preamble .Only the output url\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        416,
+        320
+      ],
+      "id": "ea1eacf3-0753-40d9-a4e3-3bcb67fa748a",
+      "name": "Apollo  Url Agent"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.apify.com/v2/acts/code_crafter~apollo-scraper/runs?token=your_apify_api_token",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"getPersonalEmails\": true,\n    \"getWorkEmails\": true,\n    \"totalRecords\": 100,\n    \"url\": \"{{ $('Apollo  Url Agent').item.json.output }}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        976,
+        320
+      ],
+      "id": "ad4c9e3e-a0fd-4871-887b-154039a13ee4",
+      "name": "Apollo Apify"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2080caac-d3df-4d0f-b6a2-e61b0c07decf",
+              "name": "user_query",
+              "value": "={{ $json.chatInput }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        224,
+        320
+      ],
+      "id": "b25df70e-7155-4d98-a533-bb8ab282ef62",
+      "name": "Set User Query"
+    },
+    {
+      "parameters": {
+        "resource": "spreadsheet",
+        "title": "={{ $('When chat message received').item.json.chatInput }}",
+        "sheetsUi": {
+          "sheetValues": [
+            {
+              "title": "Sheet1"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        784,
+        320
+      ],
+      "id": "ec84eb5c-14b1-4a44-8a32-4fb1d736a873",
+      "name": "Create Spreadsheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "lvjPCRM0khWxXxUz",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "=gpt-4o-mini",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.1,
+      "position": [
+        416,
+        544
+      ],
+      "id": "1ef13c92-956b-4d65-aa7c-7812dc666140",
+      "name": "OpenAI Chat Model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "n01MpNqktp8s62n4",
+          "name": "OpenAi account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "HTTP Request7": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request8": {
+      "main": [
+        [
+          {
+            "node": "If3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Set User Query",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If3": {
+      "main": [
+        [
+          {
+            "node": "If4",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If4": {
+      "main": [
+        [],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Apollo  Url Agent": {
+      "main": [
+        [
+          {
+            "node": "Create Spreadsheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Apollo Apify": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set User Query": {
+      "main": [
+        [
+          {
+            "node": "Apollo  Url Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Spreadsheet": {
+      "main": [
+        [
+          {
+            "node": "Apollo Apify",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Apollo  Url Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "e1fb61be-883a-42c5-8d72-74dad3951959",
+  "meta": {
+    "instanceId": "8c7f016b9ba0896b59e3963aa6e3aad9cabe22a0c91c4b1ad33fc62abf63e8fb"
+  },
+  "id": "5SC8rhpOYmgLiXPG",
+  "tags": []
+}

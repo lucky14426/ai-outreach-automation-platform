@@ -1,0 +1,71 @@
+{
+  "n8n": {
+    "environment": "development",
+    "timezone": "UTC",
+    "logLevel": "info",
+    "diagnosticsEnabled": false
+  },
+
+  "security": {
+    "basicAuth": {
+      "enabled": false,
+      "user": "",
+      "password": ""
+    },
+    "encryptionKey": "CHANGE_THIS_IN_PRODUCTION"
+  },
+
+  "executions": {
+    "mode": "queue",
+    "timeoutSeconds": 300,
+    "maxConcurrentExecutions": 10,
+    "saveDataOnSuccess": "all",
+    "saveDataOnError": "all",
+    "saveExecutionProgress": true
+  },
+
+  "webhooks": {
+    "url": "https://your-domain.com",
+    "allowedOrigins": [
+      "https://your-domain.com"
+    ]
+  },
+
+  "queue": {
+    "enabled": true,
+    "redis": {
+      "host": "localhost",
+      "port": 6379,
+      "db": 0
+    }
+  },
+
+  "database": {
+    "type": "postgresdb",
+    "host": "localhost",
+    "port": 5432,
+    "database": "n8n",
+    "user": "n8n_user",
+    "schema": "public"
+  },
+
+  "limits": {
+    "workflowExecutionTimeout": 300,
+    "maxWebhookRequestsPerMinute": 120
+  },
+
+  "compliance": {
+    "saveManualExecutions": true,
+    "pruneExecutions": {
+      "enabled": true,
+      "maxAgeDays": 30
+    }
+  },
+
+  "featureFlags": {
+    "enableEmailOutreach": true,
+    "enableLinkedInOutreach": true,
+    "enableAIReplyBot": true,
+    "enableDebugLogs": false
+  }
+}

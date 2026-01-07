@@ -1,0 +1,957 @@
+{
+  "name": "LEAD RESEARCH ENRICHMENT",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Personalized Outreach Message Generation\n### Using the fetched leads, this workflow enriches the data by conducting additional research with SerpAPI, generates personalized icebreakers, and crafts tailored email and LinkedIn messages using AI models, ensuring each outreach is relevant and engaging.",
+        "height": 1020,
+        "width": 2420
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        16
+      ],
+      "id": "93936b5a-85c0-4ca0-9343-999e70fa44eb",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "### Execute the Linkedin Invite TRacker Workflow",
+        "height": 80,
+        "width": 300,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        960,
+        256
+      ],
+      "id": "a96b825e-3d48-451a-98ea-4bcea513727d",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "### Retrieves the provider ID from Unipile based on a LinkedIn profile URL. The node extracts the LinkedIn username from the URL and makes an API request to fetch user details.",
+        "height": 140,
+        "width": 320,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1520,
+        288
+      ],
+      "id": "0cf94337-4496-4957-884e-463978f23c75",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolSerpApi",
+      "typeVersion": 1,
+      "position": [
+        432,
+        656
+      ],
+      "id": "30f225cf-458a-40fd-9c99-dae67bd63bdd",
+      "name": "SerpAPI"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "=gpt-4o",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        272,
+        656
+      ],
+      "id": "033434d1-6000-480d-851c-318941e90da4",
+      "name": "OpenAI Chat Model3",
+      "credentials": {
+        "openAiApi": {
+          "id": "n01MpNqktp8s62n4",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        624,
+        656
+      ],
+      "id": "0369d24a-5bd3-4bf9-8013-8d6558e685ba",
+      "name": "OpenAI Chat Model4",
+      "credentials": {
+        "openAiApi": {
+          "id": "n01MpNqktp8s62n4",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\t\"EmailIceBreaker\": \"Icebreaker\",\n\t\"LinkedinIceBreaker\": \"IceBreaker\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        800,
+        656
+      ],
+      "id": "c4ee6f04-f9ef-41f8-b969-b1c15ef43dd6",
+      "name": "Structured Output Parser1"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "=gpt-4o",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        992,
+        704
+      ],
+      "id": "d1812364-ffba-4a4b-a740-76bf106ef0f6",
+      "name": "OpenAI Chat Model5",
+      "credentials": {
+        "openAiApi": {
+          "id": "n01MpNqktp8s62n4",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\t\"email\": {\n      \"subject\":\"Building Wellness and Success with AI\",\n      \"body\":\"Hi Masood,  \\n\\nI was impressed to learn about Elysian Real Estate's focus on wellness in property design—how's the journey of your Dubai Islands project shaping up?  \\n\\nAt [Your Agency Name], we work with forward-thinking leaders like yourself to drive more impact. Leveraging AI-driven automation, we help real estate agencies streamline administrative tasks, attract more qualified leads, and close deals faster—all without compromising the personalized service your clients value.  \\n\\nGiven your commitment to innovation and exceptional lifestyle-focused projects, I’d love to explore how AI can help amplify your team's efficiency as you grow your portfolio. Are you open to a quick chat next week?  \\n\\nLooking forward to hearing your thoughts,  \\nKrishnaraj\"\n    },\n\t\"linkedin\":{\n      \"body\":\"Hi Masood,  \\n\\nYour focus on wellness in real estate is inspiring! How's the Dubai Islands project coming along?  \\n\\nTo introduce myself, I specialize in helping real estate leaders like you leverage AI automation to enhance operations, optimize lead generation, and close deals faster. Considering Elysian Real Estate’s dedication to innovation, I believe there’s a lot of potential to streamline processes and free up time for your team to focus on what matters most—delivering exceptional experiences.  \\n\\nWould love to explore this further. Open to connecting?  \\n\\nBest regards,  \\nKrishnaraj\"\n    }\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        1168,
+        688
+      ],
+      "id": "fa7ad57f-89d9-4919-bd48-8e190509be37",
+      "name": "Structured Output Parser2"
+    },
+    {
+      "parameters": {
+        "jsCode": "items[0].json.RandomNumber = Math.floor(Math.random() * 8);\nreturn items;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1312,
+        448
+      ],
+      "id": "947377ca-2bf9-4736-8e70-e20a3ddc38d6",
+      "name": "randomizer"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Linkedin Profile Url: {{ $json.linkedin_url }}\nOgranisation Name:{{ $json.organization.name }}\nPosition:{{ $json.seniority }}\nheadline of person:{{ $json.headline }}",
+        "options": {
+          "systemMessage": "=## Role\nYou are a research assistant AI that gathers relevant details about a specific person using SerpApi. Your goal is to extract factual and publicly available information to serve as conversation starters in an email.\n\n## Instructions\n- Use SerpApi to search for the person's publicly available professional and personal details.\n- Gather information from sources such as:\n- Recent news articles, blog posts, or interviews.\n- LinkedIn or other professional profiles.\n- Social media posts relevant to their interests, achievements, or work.\n- Books, papers, or patents they have authored.\n- Extract relevant and specific details, such as:\n- Recent achievements, awards, or projects.\n- Professional background and current role.\n- Shared interests, hobbies, or affiliations.\n- Notable quotes or insights they have shared.\n- Present the information in a clean, structured format without additional commentary or suggestions.\n- Do not include any speculative or private details.\n\n## Rules\n- Only use verified and public sources.\n- Do not include opinions, assumptions, or unverifiable claims.\n- Structure the output as a list of key facts for easy reference."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        240,
+        448
+      ],
+      "id": "49fa038a-6900-4c68-b0e2-ac99a56f0048",
+      "name": "Get More info on Person"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Here is the information of the person:\nPersonName: {{ $('Loop Over Items1').item.json.name }}\nLinkedin Profile URL : {{ $('Loop Over Items1').item.json.linkedin_url }}\nCompany: {{ $('Loop Over Items1').item.json.organization.name }}\nPosition : {{ $('Loop Over Items1').item.json.seniority }}\n\nResearch Information: {{ $json.output }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=You specialize in cold outreach. Generate an engaging first-line icebreaker separately for email and LinkedIn.\n\n- Only provide the icebreaker, nothing else.\n- Base the icebreaker on the research information.\n- Keep it concise—one sentence only.\n- Write naturally, using clear and simple language.\n- Ensure it flows smoothly into an offer.\n- The LinkedIn version must not exceed 180 characters, including spaces and punctuation."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        608,
+        448
+      ],
+      "id": "4da420e1-b91d-4ba4-abc4-32104b0b3401",
+      "name": "IceBreaker Creation Agent"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Here is the information of the person:\n\nname of the person:{{ $('Loop Over Items1').item.json.name }}\nLinkedin_url:{{ $('Loop Over Items1').item.json.linkedin_url }}\nOraganizationName: {{ $('Loop Over Items1').item.json.organization.name }}\nPosition:{{ $('Loop Over Items1').item.json.seniority }}\n\nResearch information :{{ $('Get More info on Person').item.json.output }}\n\nIceBreaker for Email:{{ $json.output.EmailIceBreaker }}\nIceBreaker for Linkedin:{{ $json.output.LinkedinIceBreaker }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=## Role\nYou are a Cold Outreach Specialist helping an AI automation agency connect with real estate agency owners. Your goal is to craft highly personalized cold emails and LinkedIn messages that highlight the benefits of AI-driven automation for real estate businesses.\n\n## Instructions\n- Research Personalization: Use available research insights to customize each message.\n- Engaging Icebreaker: Rephrase the opening to make it engaging and ensure a smooth transition into the message.\n- Conversational & Human Tone: Write as if a human is speaking—simple, natural, and clear.\n- Email & LinkedIn Message Structure:\nEmail: A compelling subject line, engaging icebreaker, concise value proposition, and a strong call-to-action.\nLinkedIn Message: Ensure the body flows naturally from the icebreaker, using phrases like \"as I mentioned.\"\n- Value Proposition: Clearly communicate how AI automation can help real estate agencies streamline operations, generate leads, and close deals faster.\n- Signature: Sign both messages as [your name]\n\n## Rules\n- Do not use generic or robotic language.\n- Do not repeat the icebreaker verbatim in the LinkedIn message body.\n-  Keep messages concise and to the point.\n-  Ensure messages are relevant to real estate agency owners."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        992,
+        448
+      ],
+      "id": "1cd2fff0-a61a-450c-ae52-cea382b1925e",
+      "name": "Generate LN & Email Intro Msg"
+    },
+    {
+      "parameters": {
+        "url": "=https://[subdomain].unipile.com:[port]/api/v1/users/{{ $('Loop Over Items1').item.json.linkedin_url.split('/in/') [1] }}",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "account_id",
+              "value": "your_unipile_account_id"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-API-KEY",
+              "value": "your _unipile_api_key"
+            },
+            {
+              "name": "accept",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1648,
+        448
+      ],
+      "id": "000765bf-b7bf-4c2c-b530-ce684485c8d7",
+      "name": "getProviderID"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "349c895e-7f11-4e20-9085-3b5e40a7c2e0",
+              "name": "id",
+              "value": "={{ $('Loop Over Items1').item.json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "bdb2086c-86e4-424d-afd3-d9ad1401c840",
+              "name": "first_name",
+              "value": "={{ $('Loop Over Items1').item.json.first_name }}",
+              "type": "string"
+            },
+            {
+              "id": "bff7597c-c9f3-4e95-ac6b-4fc15f23a5d9",
+              "name": "last_name",
+              "value": "={{ $('Loop Over Items1').item.json.last_name }}",
+              "type": "string"
+            },
+            {
+              "id": "1bcade93-8ebe-4f8c-89ef-125268f159a0",
+              "name": "name",
+              "value": "={{ $('Loop Over Items1').item.json.name }}",
+              "type": "string"
+            },
+            {
+              "id": "085b5d38-e0f4-42e1-ad08-5cb05459a7ab",
+              "name": "linkedin_url",
+              "value": "={{ $('Loop Over Items1').item.json.linkedin_url }}",
+              "type": "string"
+            },
+            {
+              "id": "a258e27a-7dcb-4bf0-ade8-5c4219e2ff10",
+              "name": "email_status",
+              "value": "={{ $('Loop Over Items1').item.json.email_status }}",
+              "type": "string"
+            },
+            {
+              "id": "3d32e338-0f63-440c-9b16-9aef4d7b3ff4",
+              "name": "photo_url",
+              "value": "={{ $('Loop Over Items1').item.json.photo_url }}",
+              "type": "string"
+            },
+            {
+              "id": "250d39c8-cc22-42cc-a04c-d0b445036751",
+              "name": "twitter_url",
+              "value": "={{ $('Loop Over Items1').item.json.twitter_url }}",
+              "type": "string"
+            },
+            {
+              "id": "5e0e0c9a-5f55-4630-bb2a-ff2524745011",
+              "name": "github_url",
+              "value": "={{ $('Loop Over Items1').item.json.github_url }}",
+              "type": "string"
+            },
+            {
+              "id": "ca28d838-3f12-4d6d-9f8f-5edae286f8ea",
+              "name": "facebook_url",
+              "value": "={{ $('Loop Over Items1').item.json.facebook_url }}",
+              "type": "string"
+            },
+            {
+              "id": "e497cc26-549a-43f7-a86f-251bf804bee8",
+              "name": "headlne",
+              "value": "={{ $('Loop Over Items1').item.json.headline }}",
+              "type": "string"
+            },
+            {
+              "id": "8c7c77f5-5182-4194-8d3f-67947772c4ec",
+              "name": "email",
+              "value": "={{ $('Loop Over Items1').item.json.email }}",
+              "type": "string"
+            },
+            {
+              "id": "06b27220-8ed0-4dd2-ab79-aec1999da815",
+              "name": "country",
+              "value": "={{ $('Loop Over Items1').item.json.country }}",
+              "type": "string"
+            },
+            {
+              "id": "aca317a1-ffe4-45b9-acf3-f74555b94f1d",
+              "name": "organization_name",
+              "value": "={{ $('Loop Over Items1').item.json.organization.name }}",
+              "type": "string"
+            },
+            {
+              "id": "ea8e58ff-c1f1-4b47-88c7-e46ef780f594",
+              "name": "organization_website",
+              "value": "={{ $('Loop Over Items1').item.json.organization.website_url }}",
+              "type": "string"
+            },
+            {
+              "id": "57e5a482-f6b1-4f15-85e7-021d3283ff9a",
+              "name": "seniority",
+              "value": "={{ $('Loop Over Items1').item.json.seniority }}",
+              "type": "string"
+            },
+            {
+              "id": "fba67498-f957-4037-9630-0ba685bb3463",
+              "name": "=peronsal_emails",
+              "value": "={{ $('Loop Over Items1').item.json.personal_emails.map(email => email) }}\n",
+              "type": "string"
+            },
+            {
+              "id": "16193e45-fb22-455d-9fa1-a4c4de79c0b8",
+              "name": "research_info",
+              "value": "={{ $('Get More info on Person').item.json.output }}",
+              "type": "string"
+            },
+            {
+              "id": "7e2bb9ca-2eff-4f11-bbc7-543471b1e298",
+              "name": "emailicebreaker",
+              "value": "={{ $('IceBreaker Creation Agent').item.json.output.EmailIceBreaker }}",
+              "type": "string"
+            },
+            {
+              "id": "b46e07f6-5d19-46d5-ab82-26e7a04c51ce",
+              "name": "LinkedinIceBreaker",
+              "value": "={{ $('IceBreaker Creation Agent').item.json.output.LinkedinIceBreaker }}",
+              "type": "string"
+            },
+            {
+              "id": "8993c481-c23f-42ef-9742-22b23a258395",
+              "name": "Email_subject",
+              "value": "={{ $('Generate LN & Email Intro Msg').item.json.output.email.subject }}\n",
+              "type": "string"
+            },
+            {
+              "id": "3f340d58-7d3f-4bd9-8961-ca553e78e533",
+              "name": "Email_body",
+              "value": "={{ $('Generate LN & Email Intro Msg').item.json.output.email.body }}",
+              "type": "string"
+            },
+            {
+              "id": "3a537a52-2d68-42aa-996a-d2cab9412259",
+              "name": "linkedin_body",
+              "value": "={{ $('Generate LN & Email Intro Msg').item.json.output.linkedin.body }}",
+              "type": "string"
+            },
+            {
+              "id": "307ed1ea-d15c-4ccb-bc87-9c8d2ce573b6",
+              "name": "Linkedin_ProviderID",
+              "value": "={{ $json.provider_id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1808,
+        496
+      ],
+      "id": "d364b77f-d6a7-4806-b00f-6b88c58fccaf",
+      "name": "Set All Data"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $('Create Spreadsheet').item.json.spreadsheetId }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "={{ $('Create Spreadsheet').item.json.sheets[0].properties.sheetId }}",
+          "mode": "id"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "first_name",
+              "displayName": "first_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "last_name",
+              "displayName": "last_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "linkedin_url",
+              "displayName": "linkedin_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "email_status",
+              "displayName": "email_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "photo_url",
+              "displayName": "photo_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "twitter_url",
+              "displayName": "twitter_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "github_url",
+              "displayName": "github_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "facebook_url",
+              "displayName": "facebook_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "headlne",
+              "displayName": "headlne",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "country",
+              "displayName": "country",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "organization_name",
+              "displayName": "organization_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "organization_website",
+              "displayName": "organization_website",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "seniority",
+              "displayName": "seniority",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "peronsal_emails",
+              "displayName": "peronsal_emails",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "research_info",
+              "displayName": "research_info",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "emailicebreaker",
+              "displayName": "emailicebreaker",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "LinkedinIceBreaker",
+              "displayName": "LinkedinIceBreaker",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Email_subject",
+              "displayName": "Email_subject",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Email_body",
+              "displayName": "Email_body",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "linkedin_body",
+              "displayName": "linkedin_body",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1968,
+        656
+      ],
+      "id": "f8f9f516-036e-4c0d-9e9c-c424f24889c9",
+      "name": "update Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "lvjPCRM0khWxXxUz",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        48,
+        400
+      ],
+      "id": "4e8996ec-6c1a-4ebe-8222-b5926dd2fdf6",
+      "name": "Loop Over Items1"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "eznT0ZRowkdXvjYU",
+          "mode": "list",
+          "cachedResultName": "My workflow 8"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Spreadsheet Id": "={{ $('Create Spreadsheet').item.json.spreadsheetId }}",
+            "Sheetid": "={{ $('Create Spreadsheet').item.json.sheets[0].properties.sheetId }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Spreadsheet Id",
+              "displayName": "Spreadsheet Id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "Sheetid",
+              "displayName": "Sheetid",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        752,
+        224
+      ],
+      "id": "343ee04e-c0dc-4a25-8967-79ccf2a8fe8d",
+      "name": "Execute LN invite Workflow"
+    },
+    {
+      "parameters": {
+        "amount": "={{ $json.RandomNumber }}"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1472,
+        448
+      ],
+      "id": "e97c4260-4f23-4ae2-a41c-4a53372e84ec",
+      "name": "Wait5",
+      "webhookId": "2e2d10c8-1e03-4946-8900-c84f9e70d21a"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "SerpAPI": {
+      "ai_tool": [
+        [
+          {
+            "node": "Get More info on Person",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Get More info on Person",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model4": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "IceBreaker Creation Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser1": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "IceBreaker Creation Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model5": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Generate LN & Email Intro Msg",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser2": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Generate LN & Email Intro Msg",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "randomizer": {
+      "main": [
+        [
+          {
+            "node": "Wait5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get More info on Person": {
+      "main": [
+        [
+          {
+            "node": "IceBreaker Creation Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IceBreaker Creation Agent": {
+      "main": [
+        [
+          {
+            "node": "Generate LN & Email Intro Msg",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate LN & Email Intro Msg": {
+      "main": [
+        [
+          {
+            "node": "randomizer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "getProviderID": {
+      "main": [
+        [
+          {
+            "node": "Set All Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set All Data": {
+      "main": [
+        [
+          {
+            "node": "update Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "update Sheets": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items1": {
+      "main": [
+        [
+          {
+            "node": "Execute LN invite Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get More info on Person",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait5": {
+      "main": [
+        [
+          {
+            "node": "getProviderID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "94990b9e-71b6-412b-9d45-1b9d4c7029c5",
+  "meta": {
+    "instanceId": "8c7f016b9ba0896b59e3963aa6e3aad9cabe22a0c91c4b1ad33fc62abf63e8fb"
+  },
+  "id": "sZ7RlTC0tnk0H4tT",
+  "tags": []
+}

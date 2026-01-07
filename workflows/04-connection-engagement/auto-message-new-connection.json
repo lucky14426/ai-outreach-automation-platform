@@ -1,0 +1,841 @@
+{
+  "name": "AUTO MESSAGE NEW CONNECTION",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Engage Instantly: Auto-Message New LinkedIn Connections\n### This automates the process of updating a Google Sheets document when a LinkedIn connection request is accepted, marking the invitation as accepted.\n### It also sends a message to the new connection and logs the interaction in a database, ensuring seamless communication and tracking.",
+        "height": 400,
+        "width": 2280,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -112,
+        -96
+      ],
+      "id": "6a0d856c-5f26-42e9-a50d-7801267851e6",
+      "name": "Sticky Note10"
+    },
+    {
+      "parameters": {
+        "content": "### Fetches the LinkedIn message body from  Google Sheet based on the provider ID",
+        "height": 100,
+        "width": 320
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1216,
+        208
+      ],
+      "id": "14f655c4-510d-48c6-a0c3-a361c8f264f2",
+      "name": "Sticky Note8"
+    },
+    {
+      "parameters": {
+        "content": "### When new message recieved (webhook created in Unipile)",
+        "height": 100,
+        "width": 320
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -96,
+        176
+      ],
+      "id": "96081f21-5c05-45e0-ab31-c5e4787ee6cd",
+      "name": "Sticky Note11"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1tSl-WdN2D6BPtWbE0Yu2WWY4tjfr6likzBHgoNJAnRQ",
+          "mode": "list",
+          "cachedResultName": "LN Tracker",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1tSl-WdN2D6BPtWbE0Yu2WWY4tjfr6likzBHgoNJAnRQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1tSl-WdN2D6BPtWbE0Yu2WWY4tjfr6likzBHgoNJAnRQ/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "LN_providerID": "={{ $json.LN_providerID }}",
+            "LN_invitationaccepted": "YES"
+          },
+          "matchingColumns": [
+            "LN_providerID"
+          ],
+          "schema": [
+            {
+              "id": "first_name",
+              "displayName": "first_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "last_name",
+              "displayName": "last_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "LN_url",
+              "displayName": "LN_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "LN_publicID",
+              "displayName": "LN_publicID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "LN_providerID",
+              "displayName": "LN_providerID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "LN_invitationSent",
+              "displayName": "LN_invitationSent",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "LN_invitationaccepted",
+              "displayName": "LN_invitationaccepted",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "LN_msgSent",
+              "displayName": "LN_msgSent",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "emailSent",
+              "displayName": "emailSent",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "LN_emailReplied",
+              "displayName": "LN_emailReplied",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "OriginSpreadsheetID",
+              "displayName": "OriginSpreadsheetID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Origin SheetID",
+              "displayName": "Origin SheetID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "LN_noofmessages",
+              "displayName": "LN_noofmessages",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        736,
+        48
+      ],
+      "id": "913dac88-fa3f-498d-b474-719ad73af170",
+      "name": "update LN tracker",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "lvjPCRM0khWxXxUz",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $('Get the Person1').item.json.OriginSpreadsheetID }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "={{ $('Get the Person1').item.json[\"Origin SheetID\"] }}",
+          "mode": "id"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Linkedin_ProviderID",
+              "lookupValue": "={{ $json.LN_providerID }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1360,
+        48
+      ],
+      "id": "da7dac36-a264-4bcc-8f1b-29c9003fe676",
+      "name": "Get LN body",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "lvjPCRM0khWxXxUz",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "value": "public",
+          "mode": "list",
+          "cachedResultName": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "n8n_chat_histories",
+          "mode": "list",
+          "cachedResultName": "n8n_chat_histories"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "session_id": "={{ $('When First Msg Recieved').item.json.body.attendees[0].attendee_provider_id }}",
+            "messages": "={ \"type\": \"ai\", \"content\": \"{{ $('Get LN body').item.json.linkedin_body.replace(/\\n/g,'') }}\", \"tool_calls\": [], \"additional_kwargs\": {}, \"response_metadata\": {}, invalid_tool_calls\": [] }"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "session_id",
+              "displayName": "session_id",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "messages",
+              "displayName": "messages",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        1776,
+        48
+      ],
+      "id": "d9c49510-e850-4728-b64f-53ff4a90f2d7",
+      "name": "add first msg to memory"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1tSl-WdN2D6BPtWbE0Yu2WWY4tjfr6likzBHgoNJAnRQ",
+          "mode": "list",
+          "cachedResultName": "LN Tracker",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1tSl-WdN2D6BPtWbE0Yu2WWY4tjfr6likzBHgoNJAnRQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1tSl-WdN2D6BPtWbE0Yu2WWY4tjfr6likzBHgoNJAnRQ/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "LN_providerID": "={{ $('When First Msg Recieved').item.json.body.attendees[0].attendee_provider_id }}",
+            "LN_noofmessages": "1"
+          },
+          "matchingColumns": [
+            "LN_providerID"
+          ],
+          "schema": [
+            {
+              "id": "first_name",
+              "displayName": "first_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "last_name",
+              "displayName": "last_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "LN_url",
+              "displayName": "LN_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "LN_publicID",
+              "displayName": "LN_publicID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "LN_providerID",
+              "displayName": "LN_providerID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "LN_invitationSent",
+              "displayName": "LN_invitationSent",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "LN_invitationaccepted",
+              "displayName": "LN_invitationaccepted",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "LN_msgSent",
+              "displayName": "LN_msgSent",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "emailSent",
+              "displayName": "emailSent",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "LN_emailReplied",
+              "displayName": "LN_emailReplied",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "OriginSpreadsheetID",
+              "displayName": "OriginSpreadsheetID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Origin SheetID",
+              "displayName": "Origin SheetID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "LN_noofmessages",
+              "displayName": "LN_noofmessages",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1984,
+        48
+      ],
+      "id": "f8974746-c760-40a4-b18d-9f053bd32b4d",
+      "name": "Update Message Number in GSheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "lvjPCRM0khWxXxUz",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "deeba7a0-65c1-4c5b-ae32-6a2ff9a006e2",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        16,
+        48
+      ],
+      "id": "00a758f9-f02f-4216-ace3-edc7fa6638bf",
+      "name": "When First Msg Recieved",
+      "webhookId": "deeba7a0-65c1-4c5b-ae32-6a2ff9a006e2"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "8b46b7be-162d-4f3c-9a99-0daeb1286fc2",
+              "leftValue": "={{ $json.LN_noofmessages }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        432,
+        48
+      ],
+      "id": "6530fe33-af6a-4889-a403-2acae6c91822",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1tSl-WdN2D6BPtWbE0Yu2WWY4tjfr6likzBHgoNJAnRQ",
+          "mode": "list",
+          "cachedResultName": "LN Tracker",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1tSl-WdN2D6BPtWbE0Yu2WWY4tjfr6likzBHgoNJAnRQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1tSl-WdN2D6BPtWbE0Yu2WWY4tjfr6likzBHgoNJAnRQ/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "LN_providerID",
+              "lookupValue": "={{ $json.body.attendees[0].attendee_provider_id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        208,
+        48
+      ],
+      "id": "e6918a0f-5fda-41ff-b5c2-c3d6277dba7f",
+      "name": "Get the Person1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "lvjPCRM0khWxXxUz",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://[subdomain].unipile.com:[port]/api/v1/chats",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-API-KEY",
+              "value": "your_unipile_api_key"
+            },
+            {
+              "name": "accept",
+              "value": "application/json"
+            },
+            {
+              "name": "content-type",
+              "value": "multipart/form-data"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "attendees_ids",
+              "value": "={{ $json.Linkedin_ProviderID }}"
+            },
+            {
+              "name": "account_id",
+              "value": "your_unipile_account_id"
+            },
+            {
+              "name": "text",
+              "value": "={{ $json.linkedin_body }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1584,
+        48
+      ],
+      "id": "ec89e4f3-568d-425f-892f-120228eae20c",
+      "name": "SendMessage1"
+    },
+    {
+      "parameters": {
+        "amount": "={{ $json.RandomNumber }}"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1136,
+        48
+      ],
+      "id": "6ca0ce54-1ca8-4da3-8ec1-8b92afa6447b",
+      "name": "Wait3",
+      "webhookId": "2e2d10c8-1e03-4946-8900-c84f9e70d21a"
+    },
+    {
+      "parameters": {
+        "jsCode": "items[0].json.RandomNumber = Math.floor(Math.random() * 8);\nreturn items;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        944,
+        48
+      ],
+      "id": "5edbe144-0683-49d7-a3f6-e73a2a4f5538",
+      "name": "randomizer2"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "update LN tracker": {
+      "main": [
+        [
+          {
+            "node": "randomizer2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get LN body": {
+      "main": [
+        [
+          {
+            "node": "SendMessage1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "add first msg to memory": {
+      "main": [
+        [
+          {
+            "node": "Update Message Number in GSheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When First Msg Recieved": {
+      "main": [
+        [
+          {
+            "node": "Get the Person1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "update LN tracker",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get the Person1": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SendMessage1": {
+      "main": [
+        [
+          {
+            "node": "add first msg to memory",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait3": {
+      "main": [
+        [
+          {
+            "node": "Get LN body",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "randomizer2": {
+      "main": [
+        [
+          {
+            "node": "Wait3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "94d6261b-d8c2-4eeb-8e7d-82acd0e16d24",
+  "meta": {
+    "instanceId": "8c7f016b9ba0896b59e3963aa6e3aad9cabe22a0c91c4b1ad33fc62abf63e8fb"
+  },
+  "id": "URsKYgfWqnnWgjxh",
+  "tags": []
+}

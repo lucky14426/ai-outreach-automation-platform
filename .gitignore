@@ -1,0 +1,86 @@
+############################################
+# Environment & Secrets
+############################################
+
+.env
+.env.*
+!.env.example
+
+credentials.json
+credentials.*.json
+config/credentials.json
+
+############################################
+# n8n Runtime Data
+############################################
+
+.n8n/
+n8n/
+data/
+executions/
+binaryData/
+
+############################################
+# Logs
+############################################
+
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+############################################
+# Database
+############################################
+
+*.sqlite
+*.db
+*.sql
+*.dump
+
+############################################
+# Node / Package Managers
+############################################
+
+node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+############################################
+# OS & Editor Files
+############################################
+
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.vscode/
+.idea/
+
+############################################
+# Build & Deployment Artifacts
+############################################
+
+dist/
+build/
+out/
+.vercel/
+.netlify/
+
+############################################
+# Temporary & Backup Files
+############################################
+
+tmp/
+temp/
+*.bak
+*.old
+*.backup
+
+############################################
+# Screenshots / Local Assets (Optional)
+############################################
+
+screenshots-local/
